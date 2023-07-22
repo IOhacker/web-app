@@ -6,8 +6,9 @@
 
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" matTooltip="Loans Account"
-            [src]="'assets/images/loans_account_placeholder.png'">
+          <mifosx-svg-icon [iconClass]="" iconFile="account_placeholder"
+          iconName="LOAN_ACCOUNT" iconWidth="210" matTooltip="Loan Account">
+          </mifosx-svg-icon>
         </div>
       </div>
 
@@ -18,9 +19,8 @@
             <div fxFlex="60%">
               <h3>
                 <i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}"
-                  [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></i>
-                Loan Product: {{loanDetailsData.loanProductName}}<span
-                  class="m-l-10">({{loanDetailsData.accountNo}})</span>
+                  [ngClass]="loanDetailsData.inArrears?'status-active-overdue':( iconLoanStatusColor() | statusLookup)"></i>
+                Loan Product: {{loanDetailsData.loanProductName}} <mifosx-account-number accountNo="{{loanDetailsData.accountNo}}"></mifosx-account-number>
               </h3>
               <span class="loans-overview">
                 {{entityType}} Name: {{loanDetailsData.clientName ||
@@ -134,7 +134,7 @@
           Transactions
         </a>
       </ng-container>
-      <ng-container>
+      <ng-container *ngIf="loanDetailsData.status.active">
         <a mat-tab-link [routerLink]="['./delinquencytags']" routerLinkActive #delinquencytags="routerLinkActive"
           [active]="delinquencytags.isActive">
           Delinquency Tags
@@ -170,10 +170,12 @@
           Charges
         </a>
       </ng-container>
-      <a mat-tab-link [routerLink]="['./loan-reschedules']" routerLinkActive #loanReschedules="routerLinkActive"
-        [active]="loanReschedules.isActive">
-        Loan Reschedules
-      </a>
+      <ng-container *ngIf="loanDetailsData.status.active">
+        <a mat-tab-link [routerLink]="['./loan-reschedules']" routerLinkActive #loanReschedules="routerLinkActive"
+          [active]="loanReschedules.isActive">
+          Loan Reschedules
+        </a>
+      </ng-container>
       <a mat-tab-link [routerLink]="['./loan-documents']" routerLinkActive #loanDocuments="routerLinkActive"
         [active]="loanDocuments.isActive">
         Loan Documents
@@ -186,6 +188,12 @@
         <a mat-tab-link [routerLink]="['./standing-instruction']" routerLinkActive
           #standingInstruction="routerLinkActive" [active]="standingInstruction.isActive">
           Standing Instruction
+        </a>
+      </ng-container>
+      <ng-container *ngIf="loanDetailsData.status.active">
+        <a mat-tab-link [routerLink]="['./external-asset-owner']" routerLinkActive #externalAssetOwner="routerLinkActive"
+          [active]="externalAssetOwner.isActive">
+          External Asset Owner
         </a>
       </ng-container>
       <ng-container *ngFor="let loanDatatable of loanDatatables">

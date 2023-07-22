@@ -297,7 +297,7 @@
           <input matInput required formControlName="maxOutstandingLoanBalance">
         </mat-form-field>
         <span fxFlex>
-          <button type="button" mat-icon-button color="primary" (click)="addDisbursementDataEntry(disbursementData)"
+          <button type="button" mat-icon-button color="primary" required (click)="addDisbursementDataEntry(disbursementData)"
             [disabled]="isMultiDisbursedCompleted">
             <fa-icon icon="plus-circle" size="lg"></fa-icon>
           </button>
@@ -426,8 +426,8 @@
       Previous
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
-      <fa-icon icon="arrow-right"></fa-icon>
+      Next
+      <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
     <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
       Cancel
